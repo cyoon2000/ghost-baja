@@ -18,7 +18,7 @@ class TokenTestCase(unittest.TestCase):
 
     def test_create_availability(self):
         mock = {
-            'unit_id':'20160329:20160415bajapete41',
+            'unit_id':'20160329:20160415:bajapete41',
             'from_date':time.mktime(datetime.datetime(2016,3,29).timetuple()),
             'start_date':time.mktime(datetime.datetime(2016,4,15).timetuple()),
             'calendar_id':'gcal_bajapete_41',
