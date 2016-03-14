@@ -7,7 +7,7 @@ from baja import app
 from baja import useful
 from baja import model
 from baja import validators
-from flask import request
+from flask import jsonify, request
 from werkzeug.datastructures import MultiDict
 
 @app.route('/')
@@ -30,7 +30,7 @@ def check_auth():
     }
     encoded = jwt.encode(payload, secret, algorithm='HS256')
 
-    return json.dumps({'token':encoded})
+    return jsonify(token=encoded)
 
 @app.route('/freebusy', methods=['POST', 'PUT'])
 @useful.authorized
@@ -44,12 +44,12 @@ def freebusy():
     form = validators.AvailableForm(data=entry, csrf_enabled=False)
     if not form.validate():
         print 'errors:%s'%(form.errors)
-        return json.dumps({'rc':-1, 'message':form.errors})
+        return jsonify(rc=-1, message=form.errors)
     if request.method == 'POST':
         _id = model.create_availability(**entry)
     elif request.method == 'PUT':
         _id = model.update_availability(**entry)
-    return json.dumps({'rc':0, '_id':_id})
+    return jsonify(rc=0, _id=_id)
 
 @app.route('/delete/<unit_id>/')
 @useful.authorized

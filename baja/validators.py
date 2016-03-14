@@ -4,7 +4,7 @@ from wtforms.validators import ValidationError
 
 def unit_id_format(form, field):
     parts = field.data.split(':')
-    if parts != 3:
+    if len(parts) != 3:
         raise ValidationError('unit id format is <start>:<end>:<unit id>')
 
 class AvailableForm(Form):
